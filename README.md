@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js User Management Table
 
-## Getting Started
+## Overview
+This is a **User Management Table** application built with **Next.js**, leveraging the following technologies:
 
-First, run the development server:
+- **TanStack Table** for table functionalities (sorting, filtering, pagination).
+- **TanStack Query** for data fetching and caching.
+- **Shadcn** for UI components.
+- **React** for building the user interface.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+The app displays a list of users fetched from a mock API and supports functionalities like global filtering, column-specific filtering, server-side pagination, and sorting.
+
+---
+
+## Features
+
+1. **Sorting:**
+   - Allows sorting of columns like Name and Email in ascending or descending order.
+   - Multi-column sorting is supported.
+
+2. **Filtering:**
+   - Global filtering for all data.
+   - Column-specific filtering for fine-grained search.
+
+3. **Pagination:**
+   - Server-side pagination to handle large datasets efficiently.
+   - Next/Previous buttons for navigation.
+
+4. **Responsive UI:**
+   - Fully responsive table design with accessible components.
+
+---
+
+## Challenges Faced
+
+### Sorting Implementation with Pagination
+During the development, combining sorting with server-side pagination posed a challenge. The issue was ensuring that sorting updates were correctly sent to the API along with the pagination parameters. Specifically:
+
+- **Challenge:** When a user sorted a column, the current page data had to refresh while maintaining the page number and sorting order.
+- **Solution:** To resolve this:
+  - Updated the `queryKey` dynamically with sorting and pagination states.
+  - Used the `onSortingChange` callback of TanStack Table to trigger a refetch.
+  - Ensured API responses matched the requested sort order to avoid incorrect table rendering.
+
+This added complexity but ultimately ensured a seamless user experience.
+
+---
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/your-repo-name.git
+   cd your-repo-name
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) to view the app.
+
+---
+
+## Folder Structure
+
+```plaintext
+/src
+  /components
+    - ui (Reusable UI components like Button, Table, etc.)
+    - user-details.tsx (Details modal for individual users)
+  /pages
+    - index.tsx (Main application logic)
+    - providers.tsx (React Query provider setup)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API Endpoint
+The application fetches user data from a mock API:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```plaintext
+https://jsonplaceholder.typicode.com/users
+```
 
-## Learn More
+Pagination parameters are appended to the URL (e.g., `_page=1&_limit=10`).
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Use the global filter input to search across all columns.
+2. Filter specific columns like Name or Email using the provided inputs.
+3. Sort by clicking on column headers.
+4. Navigate through pages using Next and Previous buttons.
+5. Click **View Details** to see detailed information about a user in a modal.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Future Enhancements
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Add **server-side filtering** support.
+2. Integrate with a real backend for production use.
+3. Implement advanced features like export to CSV and infinite scrolling.
+
+---
+
+## Contributing
+Feel free to fork this repository, submit issues, or create pull requests. All contributions are welcome!
+
+---
+
+
